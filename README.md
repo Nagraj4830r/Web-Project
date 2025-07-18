@@ -1,1 +1,76 @@
 # Web-Project
+
+# AWS EC2 Website Hosting Project
+
+This project demonstrates how to host multiple static websites on a single Amazon EC2 instance using Apache (`httpd`). It includes configuration for serving one site on the default HTTP port (80) and another on a custom port (8080), without interfering with each other.
+
+---
+
+## 🚀 Project Overview
+
+- **Platform:** Amazon EC2 (Amazon Linux 2)
+- **Web Server:** Apache HTTP Server
+- **Languages:** HTML
+- **Ports Used:**
+  - Port 80 → Main Website
+  - Port 8080 → Secondary Website
+
+---
+
+## 🛠️ Setup Steps
+
+### 1. Launch EC2 Instance
+- Selected Amazon Linux 2 AMI
+- Enabled ports 22 (SSH), 80 (HTTP), and 8080 (Custom TCP) in Security Group
+
+### 2. Install Apache
+```bash (if you are working as a root user no need to use SUDO)
+ yum update -y
+ yum install httpd -y
+ Service httpd start
+ Service httpd status
+
+
+3. Host Main Website (Port 80)
+- Edited /var/www/html/index.html with custom HTML content
+
+4. Host Second Website (Port 8080)
+- Created /var/www/html8080/index.html
+- Modified /etc/httpd/conf/httpd.conf to:
+Listen 8080
+
+Adding this Listen is bottom of the conf file.
+<VirtualHost *:8080>
+    DocumentRoot "/var/www/html8080"
+    ServerName localhost
+    <Directory "/var/www/html8080">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+- Restarted Apache:
+sudo systemctl restart httpd
+
+
+
+🌐 Accessing the Websites
+- Main Site: http://<your-ec2-public-ip>
+- Second Site: http://<your-ec2-public-ip>:8080
+
+
+🧠 What I Learned
+- Launching and configuring EC2 instances
+- Installing and managing Apache web server
+- Hosting multiple websites using virtual hosts
+- Managing security groups and custom ports
+- Basic HTML and server-side configuration
+
+📬 Contact
+Author: Nagraj Medigere
+LinkedIn: linkedin.com/in/Nagraj-medigere
+GitHub: https://github.com/Nagraj4830r/
+
+---
+
+
